@@ -8,44 +8,73 @@
 import UIKit
 
 class ViewController: UIViewController {
-// MARK: - OUTLETS
+    // MARK: - IBOUTLETS
     @IBOutlet var colorView: UIView!
+   
     @IBOutlet var redSwitch: UISwitch!
     @IBOutlet var greenSwitch: UISwitch!
     @IBOutlet var blueSwitch: UISwitch!
 
-// MARK: - PROPERTIES
-    
-// MARK: - SETUP
+    @IBOutlet var redSlider: UISlider!
+    @IBOutlet var greenSlider: UISlider!
+    @IBOutlet var blueSlider: UISlider!
+
+
+    // MARK: - PROPERTIES
+  
+
+    // MARK: - SETUP
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         updateColor()
+        
+        
     }
-    
+
+
+    // MARK: - IBACTIONS
     @IBAction func switchChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            updateColor()
-        }
+        updateColor()
     }
     
-// MARK: - FUNCTIONS
+    @IBAction func sliderChanged(_ sender: Any) {
+        updateColor()
+    }
+    
+    @IBAction func reset(_ sender: Any) {
+        resetColor()
+        updateColor()
+    }
+    
+    
+    // MARK: - FUNCTIONS
     func updateColor() {
         var red: CGFloat   = 0
         var green: CGFloat = 0
         var blue: CGFloat  = 0
         
         if redSwitch.isOn {
-            red = 1
+            red = CGFloat(redSlider.value)
         }
         if greenSwitch.isOn {
-            green = 1
+            green = CGFloat(greenSlider.value)
         }
         if blueSwitch.isOn {
-            blue = 1
+            blue = CGFloat(blueSlider.value)
         }
         
         let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
         colorView.backgroundColor = color
+    }
+    
+    func resetColor() {
+        redSwitch.setOn(false, animated: true)
+        greenSwitch.setOn(false, animated: true)
+        blueSwitch.setOn(false, animated: true)
+        
+        redSlider.setValue(1, animated: true)
+        greenSlider.setValue(1, animated: true)
+        blueSlider.setValue(1, animated: true)
     }
 }
